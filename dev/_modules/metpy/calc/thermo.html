@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>metpy.calc.thermo &mdash; MetPy 0.11.0</title>
+  <title>metpy.calc.thermo &mdash; MetPy 0.11.1</title>
   
 
   
@@ -43,7 +43,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MetPy 0.11.0" href="../../../index.html"/>
+    <link rel="top" title="MetPy 0.11.1" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -79,7 +79,7 @@
                 
                   <div class="version-dropdown">
                     <select class="version-list" id="version-list">
-                      <option value=''>0.11.0</option>
+                      <option value=''>0.11.1</option>
                       
                         
                           <option value="../latest">latest</option>
@@ -210,7 +210,7 @@
                     <span class="n">find_intersections</span><span class="p">,</span> <span class="n">first_derivative</span><span class="p">,</span> <span class="n">get_layer</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">mpconsts</span>
 <span class="kn">from</span> <span class="nn">..cbook</span> <span class="k">import</span> <span class="n">broadcast_indices</span>
-<span class="kn">from</span> <span class="nn">..deprecation</span> <span class="k">import</span> <span class="n">metpyDeprecation</span>
+<span class="kn">from</span> <span class="nn">..deprecation</span> <span class="k">import</span> <span class="n">deprecated</span><span class="p">,</span> <span class="n">metpyDeprecation</span>
 <span class="kn">from</span> <span class="nn">..interpolate.one_dimension</span> <span class="k">import</span> <span class="n">interpolate_1d</span>
 <span class="kn">from</span> <span class="nn">..package_tools</span> <span class="k">import</span> <span class="n">Exporter</span>
 <span class="kn">from</span> <span class="nn">..units</span> <span class="k">import</span> <span class="n">atleast_1d</span><span class="p">,</span> <span class="n">check_units</span><span class="p">,</span> <span class="n">concatenate</span><span class="p">,</span> <span class="n">units</span>
@@ -933,10 +933,10 @@
                                     <span class="o">/</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">-</span> <span class="mf">29.65</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kelvin</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="dewpoint_rh"><a class="viewcode-back" href="../../../api/generated/metpy.calc.dewpoint_rh.html#metpy.calc.dewpoint_rh">[docs]</a><span class="nd">@exporter</span><span class="o">.</span><span class="n">export</span>
+<div class="viewcode-block" id="dewpoint_from_relative_humidity"><a class="viewcode-back" href="../../../api/generated/metpy.calc.dewpoint_from_relative_humidity.html#metpy.calc.dewpoint_from_relative_humidity">[docs]</a><span class="nd">@exporter</span><span class="o">.</span><span class="n">export</span>
 <span class="nd">@preprocess_xarray</span>
 <span class="nd">@check_units</span><span class="p">(</span><span class="s1">&#39;[temperature]&#39;</span><span class="p">,</span> <span class="s1">&#39;[dimensionless]&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">dewpoint_rh</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">rh</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dewpoint_from_relative_humidity</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">rh</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate the ambient dewpoint given air temperature and relative humidity.</span>
 
 <span class="sd">    Parameters</span>
@@ -961,6 +961,22 @@
     <span class="k">return</span> <span class="n">dewpoint</span><span class="p">(</span><span class="n">rh</span> <span class="o">*</span> <span class="n">saturation_vapor_pressure</span><span class="p">(</span><span class="n">temperature</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="dewpoint_rh"><a class="viewcode-back" href="../../../api/generated/metpy.calc.dewpoint_rh.html#metpy.calc.dewpoint_rh">[docs]</a><span class="nd">@exporter</span><span class="o">.</span><span class="n">export</span>
+<span class="nd">@preprocess_xarray</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s1">&#39;0.12&#39;</span><span class="p">,</span> <span class="n">addendum</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39; This function has been renamed &#39;</span>
+                              <span class="s1">&#39;dewpoint_from_relative_humidity.&#39;</span><span class="p">),</span>
+            <span class="n">pending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dewpoint_rh</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">rh</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrap dewpoint_from_relative_humidity for deprecated dewpoint_rh function.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dewpoint_from_relative_humidity</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">rh</span><span class="p">)</span></div>
+
+
+<span class="n">dewpoint_rh</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="p">(</span><span class="n">dewpoint_from_relative_humidity</span><span class="o">.</span><span class="vm">__doc__</span>
+                       <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">    .. deprecated:: 0.12.0</span><span class="se">\n</span><span class="s1">        Function has been renamed to&#39;</span>
+                         <span class="s1">&#39; `dewpoint_from_relative_humidity` and will be removed from MetPy &#39;</span>
+                         <span class="s1">&#39;in 1.0.0.&#39;</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="dewpoint"><a class="viewcode-back" href="../../../api/generated/metpy.calc.dewpoint.html#metpy.calc.dewpoint">[docs]</a><span class="nd">@exporter</span><span class="o">.</span><span class="n">export</span>
 <span class="nd">@preprocess_xarray</span>
 <span class="nd">@check_units</span><span class="p">(</span><span class="s1">&#39;[pressure]&#39;</span><span class="p">)</span>
@@ -979,7 +995,7 @@
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
-<span class="sd">    dewpoint_rh, saturation_vapor_pressure, vapor_pressure</span>
+<span class="sd">    dewpoint_from_relative_humidity, saturation_vapor_pressure, vapor_pressure</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -2548,12 +2564,12 @@
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
-<span class="sd">    relative_humidity_from_mixing_ratio, dewpoint_rh</span>
+<span class="sd">    relative_humidity_from_mixing_ratio, dewpoint_from_relative_humidity</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">dewpoint_rh</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span> <span class="n">relative_humidity_from_specific_humidity</span><span class="p">(</span><span class="n">specific_humidity</span><span class="p">,</span>
-                                                                             <span class="n">temperature</span><span class="p">,</span>
-                                                                             <span class="n">pressure</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">dewpoint_from_relative_humidity</span><span class="p">(</span><span class="n">temperature</span><span class="p">,</span>
+                                           <span class="n">relative_humidity_from_specific_humidity</span><span class="p">(</span>
+                                               <span class="n">specific_humidity</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="vertical_velocity_pressure"><a class="viewcode-back" href="../../../api/generated/metpy.calc.vertical_velocity_pressure.html#metpy.calc.vertical_velocity_pressure">[docs]</a><span class="nd">@exporter</span><span class="o">.</span><span class="n">export</span>
@@ -2686,7 +2702,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2019, MetPy Developers. Development supported by National Science Foundation grants AGS-1344155, OAC-1740315, and AGS-1901712..
-      Last updated on Oct 17, 2019 at 22:26:15.
+      Last updated on Oct 21, 2019 at 19:46:21.
 
     </p>
   </div>
@@ -2723,7 +2739,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.11.0.post28+g8c1ca0a',
+            VERSION:'0.11.1.post8+gd39ddc3',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
